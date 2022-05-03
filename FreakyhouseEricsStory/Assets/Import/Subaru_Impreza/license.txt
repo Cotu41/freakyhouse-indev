@@ -1,0 +1,11 @@
+Model Information:
+* title:	Subaru Impreza
+* source:	https://sketchfab.com/3d-models/subaru-impreza-4411a6bd5706470889e3ee511dd0b039
+* author:	Namahoi (https://sketchfab.com/Namahoi)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Subaru Impreza" (https://sketchfab.com/3d-models/subaru-impreza-4411a6bd5706470889e3ee511dd0b039) by Namahoi (https://sketchfab.com/Namahoi) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

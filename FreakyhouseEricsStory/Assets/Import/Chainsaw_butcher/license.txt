@@ -1,0 +1,11 @@
+Model Information:
+* title:	Chainsaw butcher
+* source:	https://sketchfab.com/3d-models/chainsaw-butcher-b38b2f65e0cc460a86a6c98dcae6c59c
+* author:	Madeleinone (https://sketchfab.com/Madeleinone)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Chainsaw butcher" (https://sketchfab.com/3d-models/chainsaw-butcher-b38b2f65e0cc460a86a6c98dcae6c59c) by Madeleinone (https://sketchfab.com/Madeleinone) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

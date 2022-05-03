@@ -1,0 +1,11 @@
+Model Information:
+* title:	Wine bottle
+* source:	https://sketchfab.com/3d-models/wine-bottle-413d377c4ba848fdb76d8a88533e3154
+* author:	markuzo (https://sketchfab.com/markuzo)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Wine bottle" (https://sketchfab.com/3d-models/wine-bottle-413d377c4ba848fdb76d8a88533e3154) by markuzo (https://sketchfab.com/markuzo) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

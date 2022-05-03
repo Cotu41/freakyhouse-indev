@@ -1,0 +1,11 @@
+Model Information:
+* title:	Railing
+* source:	https://sketchfab.com/3d-models/railing-67adffcc00e149a9a0ee55fd15c778cd
+* author:	1-3D.com (https://sketchfab.com/1-3D.com)
+
+Model License:
+* license type:	CC-BY-SA-4.0 (http://creativecommons.org/licenses/by-sa/4.0/)
+* requirements:	Author must be credited. Modified versions must have the same license. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Railing" (https://sketchfab.com/3d-models/railing-67adffcc00e149a9a0ee55fd15c778cd) by 1-3D.com (https://sketchfab.com/1-3D.com) licensed under CC-BY-SA-4.0 (http://creativecommons.org/licenses/by-sa/4.0/)
