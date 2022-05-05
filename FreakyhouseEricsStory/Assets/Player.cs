@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
 
     public static Player player;
 
-    public CinemachineVirtualCamera vm;
+    CinemachineBrain vm;
 
     public delegate void PlayerEvent();
     public static event PlayerEvent OnGetCellarKey;
@@ -24,11 +24,15 @@ public class Player : MonoBehaviour
 
     public Transform head;
     bool frozen = false;
+    bool lookFrozen = false;
+
     public bool inDialogue = false;
+    VoiceLine current;
 
-
+    public PhoneAnimationManager phone;
     public AudioSource voice;
 
+    Coroutine speech;
     void Start()
     {
         //Camera.main.
@@ -37,7 +41,9 @@ public class Player : MonoBehaviour
         player = this;
         Cursor.lockState = CursorLockMode.Locked;
         eyes = Camera.main;
-        vm = GetComponentInChildren<CinemachineVirtualCamera>();
+        vm = GetComponentInChildren<CinemachineBrain>();
+
+        speech = StartCoroutine(SayPendingVoicelines());
         //Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
 
     }
@@ -47,16 +53,17 @@ public class Player : MonoBehaviour
         OnGetCellarKey();
     }
 
-    public void toggleInDialogue()
-    {
-        if (inDialogue) setInDialogue(false);
-        if (!inDialogue) setInDialogue(true);
-    }
+    public void EnableLookFreeze() { setLookFreeze(true); }
+    public void DisableLookFreeze() { setLookFreeze(false); }
 
-    public void toggleLookFreeze()
+    public void setLookFreeze(bool freeze)
     {
-        
-
+        return;
+        lookFrozen = freeze;
+        if (vm != null)
+        {
+            vm.enabled = !freeze;
+        }
     }
 
     public void KO()
@@ -65,21 +72,7 @@ public class Player : MonoBehaviour
         OnKnockout?.Invoke();
     }
 
-    public void setInDialogue(bool inDialogue)
-    {
-        if(inDialogue)
-        {
-            Cursor.lockState = CursorLockMode.Confined;
-            frozen = true;
-            inDialogue = true;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            frozen = false;
-            inDialogue = false;
-        }
-    }
+
 
     public static bool FrustrumCast(Collider target)
     {
@@ -109,33 +102,176 @@ public class Player : MonoBehaviour
         return false;
 
         
-
+        
 
 
     }
 
-    public void PlayLine(AudioClip line, bool force = false)
+    public class VoiceLine : System.IEquatable<VoiceLine>
+    {
+        AudioClip clip;
+        public readonly float phoneIn, phoneOut;
+        public float currentProgress;
+        public VoiceLine(AudioClip clip,  float phoneIn = 0, float phoneOut = 0, float startTime = 0)
+        {
+            this.clip = clip;
+            this.phoneIn = phoneIn;
+            this.phoneOut = phoneOut;
+            this.currentProgress = startTime;
+            if (this.phoneOut > clip.length) this.phoneOut = clip.length;
+        }
+
+        public AudioClip Clip()
+        {
+            return clip;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as VoiceLine);
+        }
+
+        public bool Equals(VoiceLine other)
+        {
+
+            if (other != null)
+            {
+
+                if(clip.name.Equals(other.clip.name))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            return false;
+
+
+        }
+
+        public override int GetHashCode()
+        {
+            return clip.GetHashCode();
+        }
+    }
+
+
+    Stack<VoiceLine> linesToSay = new Stack<VoiceLine>();
+
+    public AudioClip [] interruptionLines;
+    public AudioClip[] backToConvoLines;
+
+    public void PlayLine(VoiceLine line, bool force = false)
     {
         if(voice.isPlaying)
         {
-            if(force)
+            if(linesToSay.Count >= 9)
             {
-
+                if (!force) return;
             }
+
+            Debug.Log(linesToSay.Contains(line));
+            if (linesToSay.Contains(line) || current.Equals(line)) return;
+
+            Debug.Log("logged stop at time: " + current.currentProgress);
+            linesToSay.Push(current);
+            linesToSay.Push(new VoiceLine(backToConvoLines[Random.Range(0, backToConvoLines.Length)]));
+            linesToSay.Push(line);
+            linesToSay.Push(new VoiceLine(interruptionLines[Random.Range(0, interruptionLines.Length)]));
+            voice.Stop();
+            StopCoroutine(speech);
+            speech = StartCoroutine(SayPendingVoicelines());
+            //current = null;
+        }
+        else
+        {
+            linesToSay.Push(line);
         }
     }
 
     public void StopAllLines()
     {
+        StopCoroutine(speech);
         if (voice.isPlaying) voice.Stop();
+        inDialogue = false;
+        linesToSay.Clear();
+        speech = StartCoroutine(SayPendingVoicelines());
     }
+
+
+    float progressInLine = 0;
+    IEnumerator SayPendingVoicelines()
+    {
+        while (true)
+        {
+            
+            if (!voice.isPlaying && linesToSay.Count > 0)
+            {
+                current = linesToSay.Pop();
+                voice.time = (float)((int)current.currentProgress);
+                progressInLine = current.currentProgress;
+                voice.clip = current.Clip();
+                voice.Play();
+                
+                voice.SetScheduledEndTime(AudioSettings.dspTime + (current.Clip().length - current.currentProgress));
+                Debug.Log(current.Clip().name + " started at " + voice.time + "s (" + current.currentProgress + ")");
+                
+            }
+
+            if (voice.isPlaying)
+            {
+                float p_in = current.phoneIn;
+                float p_out = current.phoneOut;
+                progressInLine += Time.deltaTime;
+                current.currentProgress = progressInLine;
+                if (progressInLine >= p_out)
+                {
+                    phone.OnPhoneEnd();
+                }
+                else if (progressInLine >= p_in)
+                {
+                    phone.OnPhoneStart();
+                }
+            }
+            else
+            {
+                phone.OnPhoneEnd();
+            }
+            yield return null;
+            
+        }
+
+    }
+
+
+    private void OnApplicationFocus(bool focus)
+    {
+        if(focus)
+        {
+            setLookFreeze(false);
+            Debug.Log("Focus Gained");
+        }
+        else
+        {
+            setLookFreeze(true);
+            Debug.Log("Focus Lost");
+        }
+    }
+
+
 
     // Update is called once per frame
     void Update()
     {
         Vector3 movement = Vector3.zero;
 
-        if(!frozen)
+        //if(lookFrozen) vm.ForceCameraPosition(Camera.main.transform.position, Camera.main.transform.rotation);
+
+
+        if (!frozen)
         {
 
             
@@ -172,7 +308,11 @@ public class Player : MonoBehaviour
             OnGetCellarKey();
 
         if (Input.GetKeyDown(KeyCode.Escape))
-            toggleLookFreeze();
+        {
+            setLookFreeze(lookFrozen ? false : true);
+            
+        }
+
         transform.position += movement * speed * Time.deltaTime;
     }
 }

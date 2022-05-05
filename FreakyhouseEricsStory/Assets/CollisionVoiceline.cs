@@ -31,19 +31,45 @@ public class CollisionVoiceline : MonoBehaviour
         
     }
 
+    bool allowsTag(string otherTag)
+    {
+        foreach(string t in allowedTags)
+        {
+            if (t.Equals(otherTag)) return true;
+        }
+        return false;
+    }
+
+    public void ManualFire()
+    {
+        if (!(hit && oneshot))
+        {
+
+
+            hit = true;
+            //Player.player.PlayLine(convo, true);
+
+            Player.VoiceLine line = new Player.VoiceLine(convo, time_takePhoneOut, time_putPhoneAway);
+            Player.player.PlayLine(line, true);
+
+
+            OnVoiceline?.Invoke();
+        }
+    }
+
+
     private void OnTriggerEnter(Collider other)
     {
-        if (!(hit && oneshot) && other.tag.Equals("Player"))
+        if (!(hit && oneshot) && allowsTag(other.tag))
         {
             hit = true;
-            Player.player.voice.PlayOneShot(convo);
-            if (time_putPhoneAway == -1) time_putPhoneAway = convo.length;
-            else
-            {
-                time_putPhoneAway -= time_takePhoneOut;
-            }
+            //Player.player.PlayLine(convo, true);
+
+            Player.VoiceLine line = new Player.VoiceLine(convo, time_takePhoneOut, time_putPhoneAway);
+            Player.player.PlayLine(line, true);
+
+            
             OnVoiceline?.Invoke();
-            StartCoroutine(UpdatePhoneAnims());
         }
     }
 

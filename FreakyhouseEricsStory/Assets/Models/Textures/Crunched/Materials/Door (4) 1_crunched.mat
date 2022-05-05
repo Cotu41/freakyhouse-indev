@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Door (4) 1_crunched
   m_Shader: {fileID: 4800000, guid: 94cb0d6305cd4a743b1d2ec684e277de, type: 3}
-  m_ShaderKeywords: DIFF_VERTEX OPAQUE SPEC_GOURAUD _DIFFMODEL_VERTEX _DRAWDIST_ON
+  m_ShaderKeywords: DIFF_VERTEX OPAQUE SPEC_GOURAUD UNLIT _DIFFMODEL_VERTEX _DRAWDIST_ON
     _EMISSION _SPECMODEL_GOURAUD
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
@@ -17,7 +17,8 @@ Material:
   m_CustomRenderQueue: 2000
   stringTagMap:
     RenderType: Opaque
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - FORWARDADD
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -56,7 +57,7 @@ Material:
     m_Floats:
     - _BlendOp: 0
     - _Cul: 0
-    - _CutoutThreshold: 0.5
+    - _CutoutThreshold: 0.351
     - _DiffModel: 0
     - _DrawDist: 1
     - _DstBlend: 0
@@ -68,7 +69,7 @@ Material:
     - _SpecModel: 0
     - _Specular: 0
     - _SrcBlend: 1
-    - _Unlit: 0
+    - _Unlit: 1
     - _VertexInaccuracy: -1
     - _ZWrite: 1
     m_Colors:

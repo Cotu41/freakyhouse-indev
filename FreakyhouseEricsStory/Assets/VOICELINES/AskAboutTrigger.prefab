@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7183465572752890252}
   m_Layer: 0
   m_Name: AskAboutTrigger
-  m_TagString: Untagged
+  m_TagString: Inspectable
   m_Icon: {fileID: 2800000, guid: ad2e3e92b00839c4e991ca602ef19822, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,6 +58,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnInpected:
+    m_PersistentCalls:
+      m_Calls: []
+  allowedTags:
+  - Player
+  oneshot: 1
+  time_takePhoneOut: 0
+  time_putPhoneAway: 0
+  OnVoiceline:
     m_PersistentCalls:
       m_Calls: []
   name: Suit

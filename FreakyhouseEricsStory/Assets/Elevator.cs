@@ -7,6 +7,9 @@ public class Elevator : MonoBehaviour
 
     public GameObject doors;
 
+    public InspectionEvent OnEnterElevator;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +26,8 @@ public class Elevator : MonoBehaviour
     {
         if(other.tag.Equals("Player"))
         {
-            doors.SendMessage("Play");
+            doors.GetComponent<Animator>().SetBool("IsClosed", true);
+            OnEnterElevator?.Invoke();
         }
     }
 }

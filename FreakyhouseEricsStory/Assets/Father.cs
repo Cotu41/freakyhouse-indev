@@ -40,7 +40,7 @@ public class Father : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (nav.isStopped) footsteps.Stop();
         if(hunting)
         {
             if (currentDest == null)

@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: TexturesCom_Pavement_StoneGreen_512_albedo
   m_Shader: {fileID: 4800000, guid: 94cb0d6305cd4a743b1d2ec684e277de, type: 3}
-  m_ShaderKeywords: DIFF_FRAGMENT OPAQUE SPEC_PHONG _DIFFMODEL_VERTEX _DRAWDIST_ON
+  m_ShaderKeywords: DIFF_FRAGMENT OPAQUE SPEC_GOURAUD _DIFFMODEL_VERTEX _DRAWDIST_ON
     _EMISSION _NORMAL_MAP _SPECMODEL_GOURAUD
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
@@ -61,11 +61,11 @@ Material:
     - _DrawDist: 1
     - _DstBlend: 0
     - _LODAmt: 0
-    - _Metallic: 0
+    - _Metallic: 0.501
     - _NormalMapDepth: 128.86
     - _RenderMode: 0
-    - _Smoothness: 0.5
-    - _SpecModel: 1
+    - _Smoothness: 0.359
+    - _SpecModel: 0
     - _Specular: 0
     - _SrcBlend: 1
     - _Unlit: 0

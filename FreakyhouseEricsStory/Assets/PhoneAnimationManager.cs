@@ -15,12 +15,12 @@ public class PhoneAnimationManager : MonoBehaviour
         Inspectable.OnPhoneEnd += OnPhoneEnd;
     }
 
-    private void OnPhoneEnd()
+    public void OnPhoneEnd()
     {
         anim.SetBool("OnPhone", false);
     }
 
-    private void OnPhoneStart()
+    public void OnPhoneStart()
     {
         anim.SetBool("OnPhone", true);
     }

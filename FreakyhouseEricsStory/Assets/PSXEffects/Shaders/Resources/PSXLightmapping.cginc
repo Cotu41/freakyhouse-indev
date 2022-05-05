@@ -1,8 +1,9 @@
 #ifndef __PSXEFFECTS_LIGHTMAPPING_CGINC__
 #define __PSXEFFECTS_LIGHTMAPPING_CGINC__
 
+#include "UnityCG.cginc"
 #include "UnityPBSLighting.cginc"
-#include "UnityMetaPass.cginc"
+#include "UnityStandardMeta.cginc"
 #include "PSXEffects.cginc"
 
 struct appdata {

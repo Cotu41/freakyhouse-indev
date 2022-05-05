@@ -33,7 +33,8 @@ public class PlayerInteraction : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, 10, mask, QueryTriggerInteraction.Collide))
         {
-            hit.collider.SendMessage("OnInteract");
+            if(hit.collider.tag.Equals("Inspectable"))
+                hit.collider.SendMessage("OnInteract");
         }
 
         

@@ -17,10 +17,6 @@ public class Inspectable : MonoBehaviour
 {
 
     public InspectionEvent OnInpected;
-    public string[] allowedTags = { "Player" };
-
-    public bool oneshot = true;
-
     public float time_takePhoneOut, time_putPhoneAway;
 
     public InspectionEvent OnVoiceline;
@@ -40,16 +36,14 @@ public class Inspectable : MonoBehaviour
 
     private void OnMouseOver()
     {
-        Debug.Log("MOUSEOVER!!");
-        if (Input.GetKeyDown(KeyCode.Tab))
-            OnInteract();
+        
     }
 
     void OnInteract()
     {
-        Player.player.voice.PlayOneShot(convo);
+        Player.player.PlayLine(new Player.VoiceLine(convo, time_takePhoneOut, time_putPhoneAway));
         this.OnInpected?.Invoke();
-        StartCoroutine(UpdatePhoneAnims());
+        //StartCoroutine(UpdatePhoneAnims());
     }
 
     IEnumerator UpdatePhoneAnims()
